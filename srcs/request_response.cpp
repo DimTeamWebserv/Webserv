@@ -68,7 +68,8 @@ void	parsing_request_msg(std::string request_msg)
 void	making_response_msg()
 {
 		우리가 해줘야 하는게 무엇인가.
-
+		0. request url 처리를 해주어야 하는가. (CGI가 아닌 경우에)
+			- 엔드포인트주소/엔드포인트주소?파라미터=값&파라미터=값 으로 들어와 잘라서 넣어준다? 어디다?
 		1. 헤더를 붙여준다.
 			- 반드시 붙여줘야 하는 헤더는?
 			- 1. 번호 (200, 404, 등)
