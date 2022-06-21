@@ -7,11 +7,11 @@
 struct Client
 {
 	Server *server;
-    std::string request_msg;
-    std::string respond_msg;
+	std::string request_msg;
+	std::string respond_msg;
 
-    Client() : server(nullptr) {}
-    Client(Server *_server) : server(_server) {}
+	Client() : server(nullptr) {}
+	Client(Server *_server) : server(_server) {}
 };
 
 #endif

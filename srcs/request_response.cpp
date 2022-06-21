@@ -1,47 +1,4 @@
 
-// GET /form-action.php?color=aaaa&sport=bbbb HTTP/1.1
-// Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-// Accept-Encoding: gzip, deflate, br
-// Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7,lb;q=0.6
-// Connection: keep-alive
-// Host: localhost:8084
-// Referer: http://localhost:8084/
-// Sec-Fetch-Dest: document
-// Sec-Fetch-Mode: navigate
-// Sec-Fetch-Site: same-origin
-// Sec-Fetch-User: ?1
-// Upgrade-Insecure-Requests: 1
-// User-Agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Mobile Safari/537.36
-// sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="100", "Google Chrome";v="100"
-// sec-ch-ua-mobile: ?1
-// sec-ch-ua-platform: "Android"
-
-
-// POST /send HTTP/1.1
-// Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-// Accept-Encoding: gzip, deflate, br
-// Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7,lb;q=0.6
-// Cache-Control: max-age=0
-// Connection: keep-alive
-// Content-Length: 56
-// Content-Type: application/x-www-form-urlencoded
-// Host: localhost:8083
-// Origin: http://localhost:8083
-// Referer: http://localhost:8083/
-// Sec-Fetch-Dest: document
-// Sec-Fetch-Mode: navigate
-// Sec-Fetch-Site: same-origin
-// Sec-Fetch-User: ?1
-// Upgrade-Insecure-Requests: 1
-// User-Agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Mobile Safari/537.36
-// sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="100", "Google Chrome";v="100"
-// sec-ch-ua-mobile: ?1
-// sec-ch-ua-platform: "Android"
-
-// name: sdf
-// email: sdf@sadfae.com
-// subject: sdf
-// message: asdf
 
 	/*
 void	parsing_request_msg(std::string request_msg)
@@ -89,7 +46,6 @@ void	making_response_msg()
 		4. 보내준다.
 		5. 보내주고 나서 client 와의 연결은 어떻게 하는가? 끊는가?
 
-
 		CGI 처리
 		1. fork 한다.
 		2. fd 입출력을 main 함수로 바꿔준다.
@@ -101,12 +57,12 @@ void	making_response_msg()
 }
 	 */
 
-#include <iostream>
-#include <vector>
-#include <sstream>
-#include "../includes/Server.hpp"
+// #include <iostream>
+// #include <vector>
+// #include <sstream>
+// #include "../includes/Server.hpp"
 
-// respond, request 헤더를 구분해줄 필요가 있는가?
+// // respond, request 헤더를 구분해줄 필요가 있는가?
 struct Header
 {
 	std::string method;
@@ -130,77 +86,77 @@ struct Client
 	std::vector<std::string>	envp;
 };
 
-std::vector<std::pair<int, Client> > clients; // socket, Client 구조체 pair
+// std::vector<std::pair<int, Client> > clients; // socket, Client 구조체 pair
 
 
 
-void	validate_header(Client client)
-{
-	//version check
-	if (client.header.version != "HTTP/1.1")
-		// 505 HTTP Version Not Supported
+// void	validate_header(Client client)
+// {
+// 	//version check
+// 	if (client.header.version != "HTTP/1.1")
+// 		// 505 HTTP Version Not Supported
 
 
-	//url check
+// 	//url check
 
-	// 410 Gone (en-US)
+// 	// 410 Gone (en-US)
 
-	// method check
-	// method 권한 체크를 위해서는
-	// url 체크를 먼저 반드시 해주어야 한다.
-	int bit_check = 0x0;
-	if (client.header.method == "GET" && (client.header.method & client.server.location....))
-		;
-	else if (client.header.method == "POST" && (client.header.method & client.server.location....))
-		;
-	else if (client.header.method == "DELETE" && (client.header.method & client.server.location....))
-		;
-	else
-		// 405 Method Not Allowed
-		// !!!!! GET은 반드시 존재한다. !!!!!
-}
+// 	// method check
+// 	// method 권한 체크를 위해서는
+// 	// url 체크를 먼저 반드시 해주어야 한다.
+// 	int bit_check = 0x0;
+// 	if (client.header.method == "GET" && (client.header.method & client.server.location....))
+// 		;
+// 	else if (client.header.method == "POST" && (client.header.method & client.server.location....))
+// 		;
+// 	else if (client.header.method == "DELETE" && (client.header.method & client.server.location....))
+// 		;
+// 	else
+// 		// 405 Method Not Allowed
+// 		// !!!!! GET은 반드시 존재한다. !!!!!
+// }
 
-void	parsing_request_header(Client client, std::vector<std::string> request_split)
-{
-	std::stringstream iss(*request_split.begin());
-	std::string temp;
-	iss >> client.header.method;
-	iss >> client.header.url;
-	iss >> client.header.version;
-	// std::stringstream iss("");
-	for (std::vector<std::string>::iterator iter = ++request_split.begin(); iter != request_split.end(); iter++)
-	{
-		std::stringstream iss(*iter);
-		std::string temp;
-		iss >> temp;
-		if (temp == "connection")
-			iss >> client.header.connection;
-		else if (temp == "content-length") // 대문자일경우? Content-length content-Length 들어오는게 한결같은가?
-			iss >> client.header.content_length;
-	}
-}
+// void	parsing_request_header(Client client, std::vector<std::string> request_split)
+// {
+// 	std::stringstream iss(*request_split.begin());
+// 	std::string temp;
+// 	iss >> client.header.method;
+// 	iss >> client.header.url;
+// 	iss >> client.header.version;
+// 	// std::stringstream iss("");
+// 	for (std::vector<std::string>::iterator iter = ++request_split.begin(); iter != request_split.end(); iter++)
+// 	{
+// 		std::stringstream iss(*iter);
+// 		std::string temp;
+// 		iss >> temp;
+// 		if (temp == "connection")
+// 			iss >> client.header.connection;
+// 		else if (temp == "content-length") // 대문자일경우? Content-length content-Length 들어오는게 한결같은가?
+// 			iss >> client.header.content_length;
+// 	}
+// }
 
-void	parsing_request_msg(struct Client client)
-{
-	std::vector<std::string>	request_split;
-	std::string					request_body;
-	int	from = 0, to = 0;
+// void	parsing_request_msg(struct Client client)
+// {
+// 	std::vector<std::string>	request_split;
+// 	std::string					request_body;
+// 	int	from = 0, to = 0;
 
-	while (from < client.request_msg.length())
-	{
-		to = client.request_msg.find("\r\n", from);
-		if (from + 2 < client.request_msg.length() && client.request_msg[from + 2] == '\n')
-		{
-			request_body = client.request_msg.substr(from + 2);
-			break ;
-		}
-		request_split.push_back(client.request_msg.substr(from, to));
-		from = to + 2;
-	}
+// 	while (from < client.request_msg.length())
+// 	{
+// 		to = client.request_msg.find("\r\n", from);
+// 		if (from + 2 < client.request_msg.length() && client.request_msg[from + 2] == '\n')
+// 		{
+// 			request_body = client.request_msg.substr(from + 2);
+// 			break ;
+// 		}
+// 		request_split.push_back(client.request_msg.substr(from, to));
+// 		from = to + 2;
+// 	}
 
-	parsing_request_header(client, request_split);
-	validate_header(client);
-}
+// 	parsing_request_header(client, request_split);
+// 	validate_header(client);
+// }
 
 void	making_response_msg(Client client)
 {
