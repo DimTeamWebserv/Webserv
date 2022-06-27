@@ -134,5 +134,5 @@ int		Cgi::m_cgi_exec()
 	__cn.clients.insert(std::make_pair(pipe_out[READ], c2));
 	__cn.clients[__cn.curr_event->ident]._stage = WAIT;
 	m_delete();
-	return (200);
+	return (0);
 }

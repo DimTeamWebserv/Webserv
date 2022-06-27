@@ -21,13 +21,36 @@ void	delete_function(Request &request, Client &client)
 		request.status_code = 404;
 		return ;
 	}
-	
 	// 디렉토리면 405
 	if (request.is_directory)
 	{
 		request.status_code = 405;
 		return ;
 	}
+	std::string path = "";
+	if (request.url[0] != '.')
+		path = "." + request.path;
+	else
+		path = request.path;
+	if (path.rfind('/') != std::string::npos)
+	{
+		if (path.substr(0, path.rfind('/')) == "./cgi-bin/uploads")
+		{
+			int ret = remove(path.c_str());
+			if (ret == 0)
+			{
+				request.status_code = 200;
+				return ;
+			}
+			else
+			{
+				request.status_code = 405; //없는 파일, 읽기 전용, 숨김, 시스템 속성 등을 갖는 파일, 현재 사용 중인 파일의 경우? 422? 503?
+				return ;
+			}
+		}
+	}
+	request.status_code = 405;
+	return ;
     // TODO 특정 경로만 허용 다른 경로면 405
     // POST 이미지 업로드 요청으로 저장해둔 폴더만 DELETE 요청이 가능하게
 }
